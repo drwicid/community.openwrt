@@ -8,12 +8,14 @@ export CLI_VERBOSITY="${1:-}"
 export OPENWRT_VERSION="${OPENWRT_VERSION:-24.10.4}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$OUTPUT_DIR/../../../../" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../../../../" && pwd)"
 
 # shellcheck disable=SC2155
 export TEST_TARGET_NAME="$(basename "$SCRIPT_DIR")"
 
-source virtualenv.sh
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r "$REPO_ROOT/requirements-test.txt"
 pip install molecule 'molecule-plugins[docker]'
 [ -x /usr/bin/docker ] || {
     sudo apt-get update && sudo apt-get install -y docker.io
