@@ -28,3 +28,46 @@ openwrt_remote_tmp: /tmp
 
 # Directory for opkg package lists cache
 openwrt_remote_opkg_lists_dir: /tmp/opkg-lists
+
+# UCI discovery configuration
+# Enable UCI configuration discovery in setup module
+openwrt_discover_uci: false
+
+# Strict mode: fail if unable to retrieve state for any UCI config
+openwrt_discover_uci_strict: false
+
+# List of UCI configs to exclude from discovery
+# Example: ['rpcd', 'luci']
+openwrt_discover_uci_exclude_list: []
+
+# List of specific UCI configs to discover (if set, only these will be discovered)
+# Example: ['network', 'wireless', 'system']
+# If empty, all available configs will be discovered
+openwrt_discover_uci_configs: []
+
+# List of UCI config/section/field combinations to mark as sensitive (no_log)
+# These fields will be masked in output to prevent exposure of passwords and secrets
+# Format: Each item should be a dict with 'config', 'section', and 'field' keys
+# Example:
+#   - config: ddns
+#     section: service
+#     field: password
+#   - config: wireless
+#     section: wifi-iface
+#     field: key
+openwrt_discover_uci_sensitive_fields:
+  - config: ddns
+    section: service
+    field: password
+  - config: wireless
+    section: wifi-iface
+    field: key
+  - config: wireless
+    section: wifi-iface
+    field: wpa_psk
+  - config: rpcd
+    section: login
+    field: password
+  - config: acme
+    section: cert
+    field: credentials

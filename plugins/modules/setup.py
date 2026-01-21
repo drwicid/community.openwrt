@@ -18,7 +18,34 @@ extends_documentation_fragment:
   - community.openwrt.attributes
   - community.openwrt.attributes.facts
   - community.openwrt.attributes.facts_module
-options: {}
+options:
+  discover_uci:
+    description:
+      - Enable UCI configuration discovery.
+      - When enabled, retrieves all UCI configurations and their states.
+    type: bool
+    default: false
+  discover_uci_strict:
+    description:
+      - Strict mode for UCI discovery.
+      - If enabled, fact gathering will fail if unable to retrieve state for any UCI config.
+    type: bool
+    default: false
+  discover_uci_exclude_list:
+    description:
+      - List of UCI configs to exclude from discovery.
+      - Configs in this list will be skipped during discovery.
+    type: list
+    elements: str
+    default: []
+  discover_uci_configs:
+    description:
+      - List of specific UCI configs to discover.
+      - If set, only these configs will be discovered.
+      - If empty, all available configs will be discovered.
+    type: list
+    elements: str
+    default: []
 notes:
   - This module gathers OpenWrt-specific facts including C(ubus) data for network interfaces, devices, services, and
     system information.
@@ -92,4 +119,16 @@ ansible_facts:
       description: Network interface status from C(ubus).
       returned: when available
       type: dict
+    openwrt_uci:
+      description: UCI configuration discovery results.
+      returned: when O(discover_uci=true) and UCI is available
+      type: dict
+      contains:
+        configs:
+          description: List of discovered UCI configuration names.
+          type: list
+          elements: str
+        states:
+          description: UCI configuration states indexed by config name.
+          type: dict
 """

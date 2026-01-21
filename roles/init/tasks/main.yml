@@ -38,3 +38,13 @@
 
     - name: Install recommended packages for module compatibility
       ansible.builtin.include_tasks: packages-{{ openwrt_package_manager }}.yml
+
+- name: Gather OpenWrt facts with UCI discovery
+  community.openwrt.setup:
+    discover_uci: "{{ openwrt_discover_uci }}"
+    discover_uci_strict: "{{ openwrt_discover_uci_strict }}"
+    discover_uci_exclude_list: "{{ openwrt_discover_uci_exclude_list }}"
+    discover_uci_configs: "{{ openwrt_discover_uci_configs }}"
+  tags:
+    - always
+    - facts
