@@ -45,6 +45,7 @@
     discover_uci_strict: "{{ openwrt_discover_uci_strict }}"
     discover_uci_exclude_list: "{{ openwrt_discover_uci_exclude_list }}"
     discover_uci_configs: "{{ openwrt_discover_uci_configs }}"
+    discover_uci_sensitive_fields: "{{ openwrt_discover_uci_sensitive_fields }}"
   tags:
     - always
     - facts

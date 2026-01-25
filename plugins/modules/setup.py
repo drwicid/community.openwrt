@@ -46,6 +46,15 @@ options:
     type: list
     elements: str
     default: []
+  discover_uci_sensitive_fields:
+    description:
+      - List of UCI config/section/field combinations to mask in output.
+      - Each item should be a dict with C(config), C(section), and C(field) keys.
+      - Sensitive fields will be replaced with C(***MASKED***) to prevent exposure.
+      - "Example: C([{config: ddns, section: service, field: password}])"
+    type: list
+    elements: dict
+    default: []
 notes:
   - This module gathers OpenWrt-specific facts including C(ubus) data for network interfaces, devices, services, and
     system information.
